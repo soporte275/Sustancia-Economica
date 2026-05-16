@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reporte Forense — PL 641 Ley de Sustancia Económica | Panamá 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --navy: #0B1C2E;
+  --navy-mid: #152840;
+  --navy-light: #1E3A55;
+  --gold: #C9A84C;
+  --gold-light: #E2C47A;
+  --gold-pale: #F5E9C8;
+  --red: #C0392B;
+  --red-light: #E74C3C;
+  --amber: #D68910;
+  --amber-light: #F0A500;
+  --green: #1A7A4A;
+  --green-light: #27AE60;
+  --slate: #5D6D7E;
+  --paper: #F8F5EF;
+  --ink: #1A1A1A;
+  --ink-muted: #444;
+  --rule: #D4C9B0;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+/* ─── HEADER ─── */
+.report-header {
+  background: var(--navy);
+  color: #fff;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.header-stripe {
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 40px 40px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: start;
+}
+.header-left {}
+.report-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.report-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--gold);
+}
+.report-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+  color: #fff;
+}
+.report-subtitle {
+  font-size: 15px;
+  color: rgba(255,255,255,0.65);
+  max-width: 560px;
+  line-height: 1.6;
+}
+.header-meta {
+  text-align: right;
+}
+.meta-item {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 4px;
+}
+.meta-val {
+  font-size: 13px;
+  color: var(--gold-light);
+  font-weight: 600;
+}
+.header-badges {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+.hbadge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  padding: 4px 12px;
+  border: 1px solid;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.hbadge-red { border-color: var(--red-light); color: var(--red-light); }
+.hbadge-amber { border-color: var(--amber-light); color: var(--amber-light); }
+.hbadge-gold { border-color: var(--gold); color: var(--gold); }
+
+/* ─── RESUMEN EJECUTIVO ─── */
+.exec-summary {
+  background: var(--navy-mid);
+  padding: 32px 40px;
+  max-width: 100%;
+}
+.exec-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 3px 2fr;
+  gap: 32px;
+  align-items: start;
+}
+.exec-divider { background: var(--gold); opacity: 0.3; }
+.exec-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.exec-verdict {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: #fff;
+  line-height: 1.3;
+}
+.exec-text {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7;
+  columns: 2;
+  column-gap: 24px;
+}
+
+/* ─── MAIN CONTENT ─── */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 40px;
+}
+
+.section {
+  margin-bottom: 56px;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+}
+.section-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+/* ─── KPI GRID ─── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.kpi {
+  background: var(--navy);
+  color: #fff;
+  padding: 20px 16px;
+  position: relative;
+}
+.kpi::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--gold);
+}
+.kpi-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.kpi-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.kpi-sub {
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.4;
+}
+
+/* ─── CHART CONTAINERS ─── */
+.charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.charts-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.chart-box {
+  background: #fff;
+  border: 1px solid var(--rule);
+  padding: 20px;
+}
+.chart-box.full { grid-column: 1 / -1; }
+.chart-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--slate);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.chart-subtitle {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+.chart-wrap { position: relative; }
+
+/* ─── ANALYSIS BLOCKS ─── */
+.analysis-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.ablock {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-left: 3px solid;
+  padding: 16px 18px;
+}
+.ablock-red { border-left-color: var(--red); }
+.ablock-amber { border-left-color: var(--amber); }
+.ablock-navy { border-left-color: var(--navy); }
+.ablock-green { border-left-color: var(--green); }
+.ablock-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.al-red { color: var(--red); }
+.al-amber { color: var(--amber); }
+.al-navy { color: var(--navy); }
+.al-green { color: var(--green); }
+.ablock-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.ablock-text {
+  font-size: 12px;
+  color: var(--ink-muted);
+  line-height: 1.6;
+}
+
+/* ─── CADENA ─── */
+.chain-wrap {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+  background: var(--navy);
+  padding: 24px 20px;
+  margin-bottom: 24px;
+  position: relative;
+}
+.chain-step {
+  text-align: center;
+  padding: 0 8px;
+  position: relative;
+}
+.chain-step:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  right: -8px;
+  top: 16px;
+  color: var(--gold);
+  font-size: 16px;
+  font-weight: 700;
+}
+.cnum {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--gold);
+  margin: 0 auto 8px;
+}
+.cstep-title {
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.cstep-desc {
+  font-size: 9px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.4;
+}
+
+/* ─── SECTORES TABLE ─── */
+.sector-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-bottom: 24px;
+  background: #fff;
+  border: 1px solid var(--rule);
+}
+.sector-table th {
+  background: var(--navy);
+  color: var(--gold-light);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  text-align: left;
+}
+.sector-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-muted);
+  vertical-align: top;
+}
+.sector-table tr:last-child td { border-bottom: none; }
+.sector-table tr:nth-child(even) td { background: #FAFAF8; }
+.risk-pill {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  padding: 3px 8px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.rp-critical { background: #FDECEA; color: var(--red); border: 1px solid var(--red); }
+.rp-high { background: #FEF3E2; color: var(--amber); border: 1px solid var(--amber); }
+.rp-med { background: #E8F4FD; color: #1A6EA8; border: 1px solid #1A6EA8; }
+.rp-low { background: #EAF7EF; color: var(--green); border: 1px solid var(--green); }
+
+/* ─── REFUTACIÓN ─── */
+.refuta-item {
+  background: #fff;
+  border: 1px solid var(--rule);
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.refuta-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.rl-official { color: var(--slate); }
+.rl-refuta { color: var(--red); }
+.refuta-text { font-size: 12px; color: var(--ink-muted); line-height: 1.6; }
+
+/* ─── PROYECCIÓN DAÑOS ─── */
+.damage-proj {
+  background: var(--navy);
+  color: #fff;
+  padding: 28px 24px;
+  margin-bottom: 24px;
+}
+.dp-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--gold-light);
+  margin-bottom: 6px;
+}
+.dp-subtitle { font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
+.dp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.dp-item {
+  border-left: 2px solid var(--gold);
+  padding-left: 14px;
+}
+.dp-scenario {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 5px;
+}
+.dp-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.dp-desc { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+/* ─── CONCLUSIÓN ─── */
+.conclusion {
+  background: var(--navy);
+  color: #fff;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.conclusion::before {
+  content: '"';
+  position: absolute;
+  top: -20px;
+  left: 20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 200px;
+  color: rgba(201,168,76,0.08);
+  line-height: 1;
+  pointer-events: none;
+}
+.concl-inner { max-width: 1100px; margin: 0 auto; }
+.concl-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.concl-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+.concl-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.concl-main {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 16px;
+}
+.concl-body { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.7; }
+.concl-points {}
+.cp-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  align-items: flex-start;
+}
+.cp-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  min-width: 22px;
+  margin-top: 2px;
+}
+.cp-text { font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+
+/* ─── FOOTER ─── */
+.footer {
+  background: var(--navy);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-brand {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+.footer-sources {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.3);
+  text-align: right;
+  line-height: 1.6;
+}
+
+/* ─── FUENTES ─── */
+.sources-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.source-item {
+  background: #fff;
+  border: 1px solid var(--rule);
+  padding: 12px 14px;
+  font-size: 11px;
+}
+.source-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--gold);
+  margin-bottom: 3px;
+}
+.source-name { font-weight: 600; color: var(--navy); margin-bottom: 2px; }
+.source-detail { color: var(--slate); font-size: 10px; line-height: 1.4; }
+
+/* ─── NOTA LIBERAL ─── */
+.liberal-note {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--navy);
+  padding: 20px 20px 20px 24px;
+  margin-bottom: 16px;
+}
+.ln-author {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.ln-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--navy);
+  line-height: 1.5;
+  margin-bottom: 5px;
+}
+.ln-application { font-size: 11px; color: var(--slate); line-height: 1.5; }
+
+@media print {
+  body { background: white; }
+  .charts-row, .charts-row-3 { page-break-inside: avoid; }
+  .section { page-break-inside: avoid; }
+}
+@media (max-width: 768px) {
+  .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+  .charts-row, .charts-row-3, .analysis-grid, .dp-grid, .concl-grid, .sources-grid { grid-template-columns: 1fr; }
+  .chain-wrap { grid-template-columns: 1fr; }
+  .chain-step:not(:last-child)::after { content: '↓'; right: auto; left: 50%; top: auto; bottom: -14px; }
+  .refuta-item { grid-template-columns: 1fr; }
+  .header-inner { grid-template-columns: 1fr; }
+  .exec-inner { grid-template-columns: 1fr; }
+  .exec-divider { display: none; }
+  .exec-text { columns: 1; }
+  .main { padding: 24px 16px; }
+  .report-title { font-size: 28px; }
+  .footer { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="report-header">
+  <div class="header-stripe"></div>
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="report-eyebrow">Análisis Forense · Legislación Fiscal · República de Panamá</div>
+      <h1 class="report-title">Proyecto de Ley 641<br>Sustancia Económica</h1>
+      <p class="report-subtitle">Análisis forense integral del impacto macroeconómico, microeconómico, jurídico y estratégico. Proyección de daños a 5 años desde una perspectiva liberal-austríaca. Basado en fuentes oficiales y debate parlamentario en curso.</p>
+      <div class="header-badges">
+        <span class="hbadge hbadge-red">Riesgo estructural alto</span>
+        <span class="hbadge hbadge-amber">En debate · Asamblea Nacional</span>
+        <span class="hbadge hbadge-gold">Deadline UE: 30 jun 2026</span>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="meta-item">Fecha del reporte</div>
+      <div class="meta-val" style="margin-bottom:16px">Mayo 2026</div>
+      <div class="meta-item">Expediente</div>
+      <div class="meta-val" style="margin-bottom:16px">PL 641 / 30-ABR-2026</div>
+      <div class="meta-item">Elaborado por</div>
+      <div class="meta-val" style="margin-bottom:16px">AST System Computer Technology</div>
+      <div class="meta-item">Armando D. Núñez Chung</div>
+    </div>
+  </div>
+</div>
+
+<!-- RESUMEN EJECUTIVO -->
+<div class="exec-summary">
+  <div class="exec-inner">
+    <div>
+      <div class="exec-label">Veredicto forense</div>
+      <div class="exec-verdict">Una ley necesaria en teoría, peligrosa en la práctica por sus definiciones vagas, su aprobación apresurada y el precedente que establece.</div>
+    </div>
+    <div class="exec-divider"></div>
+    <div class="exec-text">
+      El PL 641 introduce por primera vez en el Código Fiscal panameño requisitos de sustancia económica para grupos multinacionales que reciban rentas pasivas de fuente extranjera (dividendos, intereses, regalías, ganancias de capital). La norma es una respuesta a la presión de la Unión Europea, que mantiene a Panamá en su lista de jurisdicciones no cooperadoras desde 2021. Las entidades que no demuestren presencia real pagarán 15% sobre su renta bruta —una tasa confiscatoria para empresas con márgenes delgados. El problema central no es el principio de la norma sino su implementación: términos como "adecuado" y "apropiado" sin definición reglamentaria crean discrecionalidad administrativa, inseguridad jurídica y riesgo de arbitrariedad. La marina mercante —14% de la flota mundial bajo bandera panameña— enfrenta un riesgo existencial si no se la excluye expresamente. Todo esto sin garantía de que la UE retire a Panamá de su lista en octubre 2026.
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SECCIÓN 1: INDICADORES CLAVE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Indicadores de contexto — Panamá 2025–2026</h2>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-label">PIB Real Panamá 2025</div>
+        <div class="kpi-val">$84.8B</div>
+        <div class="kpi-sub">Crecimiento 4.4% interanual. Motores: transporte, servicios financieros, inmobiliario</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Flota marina mercante</div>
+        <div class="kpi-val">8,810</div>
+        <div class="kpi-sub">Buques bajo bandera panameña. 14% de la flota mundial</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Inversión SEM 2024</div>
+        <div class="kpi-val">$1,450M</div>
+        <div class="kpi-sub">190+ sedes multinacionales. 12,000 empleos directos</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Informalidad laboral</div>
+        <div class="kpi-val">47.1%</div>
+        <div class="kpi-sub">Base frágil. Pérdida de empleos formales sin reemplazo rápido</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Tasa PL 641 (incumplimiento)</div>
+        <div class="kpi-val">15%</div>
+        <div class="kpi-sub">Sobre renta BRUTA. No sobre utilidad. Potencialmente confiscatorio</div>
+      </div>
+    </div>
+
+    <!-- GRÁFICAS FILA 1 -->
+    <div class="charts-row">
+      <div class="chart-box">
+        <div class="chart-title">Composición del PIB por sector de servicios</div>
+        <div class="chart-subtitle">Sectores expuestos al PL 641 representan ~35% del PIB de servicios panameño</div>
+        <div class="chart-wrap" style="height:240px">
+          <canvas id="chart-pib"></canvas>
+        </div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">Crecimiento económico proyectado — escenarios PL 641</div>
+        <div class="chart-subtitle">Impacto estimado sobre tasa de crecimiento según implementación de la norma (2026–2030)</div>
+        <div class="chart-wrap" style="height:240px">
+          <canvas id="chart-growth"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2: ANATOMÍA DE LA LEY -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Anatomía del PL 641 — Qué dice y qué omite</h2>
+    </div>
+
+    <div class="analysis-grid">
+      <div class="ablock ablock-navy">
+        <div class="ablock-label al-navy">Ámbito de aplicación</div>
+        <div class="ablock-title">Grupos multinacionales con rentas pasivas</div>
+        <div class="ablock-text">Aplica a entidades de grupos multinacionales (2+ entidades vinculadas en diferentes jurisdicciones) constituidas o domiciliadas en Panamá que reciban dividendos, intereses, regalías, ganancias de capital, rentas inmobiliarias o rentas de capital mobiliario de fuente extranjera.</div>
+      </div>
+      <div class="ablock ablock-green">
+        <div class="ablock-label al-green">Requisitos para mantener la exención</div>
+        <div class="ablock-title">4 pilares de sustancia (arts. 707-A a 707-K)</div>
+        <div class="ablock-text">1) Empleados calificados y remunerados en Panamá. 2) Instalaciones físicas adecuadas. 3) Toma de decisiones estratégicas en territorio panameño. 4) Gastos operativos reales relacionados con los activos generadores de renta pasiva.</div>
+      </div>
+      <div class="ablock ablock-red">
+        <div class="ablock-label al-red">Consecuencia de incumplimiento</div>
+        <div class="ablock-title">15% sobre renta BRUTA + multas</div>
+        <div class="ablock-text">Si no se demuestra sustancia, la entidad es "no calificada" y paga 15% sobre la renta bruta (no sobre la utilidad). Además queda sujeta a multas, recargos e intereses. Una empresa con margen neto del 8% pagaría más que sus ganancias totales.</div>
+      </div>
+      <div class="ablock ablock-amber">
+        <div class="ablock-label al-amber">Lo que la ley NO define</div>
+        <div class="ablock-title">Vacíos que crean discrecionalidad</div>
+        <div class="ablock-text">No define qué es "recurso humano adecuado", "gasto operativo adecuado" ni "instalaciones apropiadas". No existe reglamentación previa. El MEF tiene libertad discrecional para interpretar cada caso. Singapur y Hong Kong publicaron su reglamentación antes de aprobar la ley.</div>
+      </div>
+    </div>
+
+    <!-- GRÁFICAS FILA 2 -->
+    <div class="charts-row">
+      <div class="chart-box">
+        <div class="chart-title">Comparación de la tasa del 15% vs. márgenes típicos por sector</div>
+        <div class="chart-subtitle">El impuesto sobre renta bruta aplasta sectores con márgenes delgados</div>
+        <div class="chart-wrap" style="height:240px">
+          <canvas id="chart-margins"></canvas>
+        </div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">Índice de inseguridad jurídica — Panamá vs. jurisdicciones comparables</div>
+        <div class="chart-subtitle">Mayor puntuación = mayor certeza jurídica (escala 1–100, estimado comparativo)</div>
+        <div class="chart-wrap" style="height:240px">
+          <canvas id="chart-legal"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 3: DAÑOS MACRO -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Daños macroeconómicos directos e indirectos</h2>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-box">
+        <div class="chart-title">Riesgo de fuga del registro de buques — escenarios</div>
+        <div class="chart-subtitle">Panamá controla 14% de la flota mundial (8,810 buques). Estimación de pérdida de registro según implementación del PL 641</div>
+        <div class="chart-wrap" style="height:240px">
+          <canvas id="chart-ships"></canvas>
+        </div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">Impacto estimado sobre IED y actividad financiera (B/. millones)</div>
+        <div class="chart-subtitle">Proyección 2026–2030 bajo tres escenarios de implementación</div>
+        <div class="chart-wrap" style="height:240px">
+          <canvas id="chart-ied"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="analysis-grid">
+      <div class="ablock ablock-red">
+        <div class="ablock-label al-red">Daño crítico — marina mercante</div>
+        <div class="ablock-title">La fuga ya está ocurriendo antes de la aprobación</div>
+        <div class="ablock-text">Armadores que iban a abandonar sus buques en Panamá se están yendo a Liberia, Islas Marshall y Bahamas ante el solo rumor del 15%. La red de consulados panameños en el exterior se financia en parte con ingresos de la marina mercante. Perder el registro es perder infraestructura diplomática.</div>
+      </div>
+      <div class="ablock ablock-red">
+        <div class="ablock-label al-red">Daño crítico — precedente OCDE/BEPS</div>
+        <div class="ablock-title">Cada cesión abre la puerta a la siguiente</div>
+        <div class="ablock-text">El patrón documentado: FATCA → CRS → BEPS Acción 5 → Sustancia Económica → Pilar 2 (impuesto mínimo global 15%). Aceptar el marco como legítimo elimina el argumento soberano para resistir futuros estándares más exigentes que la OCDE ya tiene en agenda.</div>
+      </div>
+      <div class="ablock ablock-amber">
+        <div class="ablock-label al-amber">Daño alto — centro bancario</div>
+        <div class="ablock-title">Presión sobre bancos internacionales con sede en Panamá</div>
+        <div class="ablock-text">Bancos que gestionan intereses y dividendos de fuente extranjera deben demostrar que las decisiones estratégicas se toman en Panamá. La ambigüedad del texto eleva el costo de cumplimiento y puede llevar a bancos multinacionales a reubicar operaciones a jurisdicciones más predecibles.</div>
+      </div>
+      <div class="ablock ablock-amber">
+        <div class="ablock-label al-amber">Daño alto — sin garantía de salir de la lista UE</div>
+        <div class="ablock-title">Riesgo unilateral sin contrato</div>
+        <div class="ablock-text">Panamá puede aprobar el PL 641, absorber todos sus costos, y aún no ser removida de la lista UE en octubre 2026. La evaluación es discrecional de la Comisión Europea. No existe acuerdo vinculante. Es una apuesta asimétrica: costo cierto, beneficio incierto.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 4: DAÑOS MICRO -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Daños microeconómicos — Agentes y empresas concretas</h2>
+    </div>
+
+    <table class="sector-table">
+      <thead>
+        <tr>
+          <th>Sector / Agente</th>
+          <th>Riesgo PL 641</th>
+          <th>Mecanismo de daño</th>
+          <th>Impacto estimado</th>
+          <th>Plazo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Marina mercante / registro de naves</strong></td>
+          <td><span class="risk-pill rp-critical">Crítico</span></td>
+          <td>Exigir sustancia a navieras internacionales es incompatible con el modelo naviero global. 15% sobre dividendos de navieras = inviable</td>
+          <td>Pérdida de 10–30% del registro. Ingresos consulares y estatales afectados</td>
+          <td>Inmediato</td>
+        </tr>
+        <tr>
+          <td><strong>Servicios jurídicos corporativos</strong><br><small>(agentes residentes, fiduciarias, S.A.)</small></td>
+          <td><span class="risk-pill rp-critical">Crítico</span></td>
+          <td>Menos estructuras corporativas en Panamá = menos clientes. Firmas pequeñas no pueden absorber costo de cumplimiento nuevo</td>
+          <td>Miles de empleos formales de clase media. Panamá es 2° mayor proveedor de estructuras corporativas LatAm</td>
+          <td>6–18 meses</td>
+        </tr>
+        <tr>
+          <td><strong>Holding companies y estructuras de IP</strong></td>
+          <td><span class="risk-pill rp-critical">Crítico</span></td>
+          <td>Regalías y dividendos extranjeros gravados al 15% sobre bruto si no hay personal local. Relocalización a Irlanda, Holanda o Singapur</td>
+          <td>Reducción de IED en estructuras de propiedad intelectual y holdings regionales</td>
+          <td>12–24 meses</td>
+        </tr>
+        <tr>
+          <td><strong>Sedes multinacionales (SEM)</strong></td>
+          <td><span class="risk-pill rp-high">Alto</span></td>
+          <td>Ya cumplen sustancia pero temen doble reporte (MICI + MEF). Incertidumbre sobre reglas frena planes de expansión</td>
+          <td>190+ empresas, $1,450M inv., 12k empleos directos. Expansión futura en riesgo</td>
+          <td>12–36 meses</td>
+        </tr>
+        <tr>
+          <td><strong>Centro Bancario Internacional (CBI)</strong></td>
+          <td><span class="risk-pill rp-high">Alto</span></td>
+          <td>Intereses de fuente extranjera bajo escrutinio. Decisiones estratégicas deben tomarse en Panamá, difícil de demostrar para sucursales de bancos globales</td>
+          <td>Potencial reubicación de operaciones a Miami, Bogotá o Montevideo</td>
+          <td>18–36 meses</td>
+        </tr>
+        <tr>
+          <td><strong>Empresas familiares panameñas con operaciones regionales</strong></td>
+          <td><span class="risk-pill rp-med">Moderado</span></td>
+          <td>Holdings panameñas que reciben dividendos de subsidiarias en CR, Colombia o Perú quedan bajo el alcance del PL 641</td>
+          <td>Costos de cumplimiento y posible restructuración corporativa</td>
+          <td>12–24 meses</td>
+        </tr>
+        <tr>
+          <td><strong>Inmobiliario comercial clase A</strong></td>
+          <td><span class="risk-pill rp-med">Moderado</span></td>
+          <td>Menos multinacionales activas = menos demanda de oficinas premium en Ciudad de Panamá</td>
+          <td>Presión sobre precios de arrendamiento comercial y ocupación en Torres del Banistmo / Calle 50</td>
+          <td>18–36 meses</td>
+        </tr>
+        <tr>
+          <td><strong>Zona Libre de Colón</strong></td>
+          <td><span class="risk-pill rp-med">Moderado</span></td>
+          <td>Ya contrajo 10.4% en reexportaciones (2025). Debilitamiento del hub financiero reduce volumen comercial que transita por la ZLC</td>
+          <td>Contracción adicional si comerciantes internacionales reconfigu ran rutas logísticas</td>
+          <td>24–48 meses</td>
+        </tr>
+        <tr>
+          <td><strong>Consultoras / auditoras / contadores</strong></td>
+          <td><span class="risk-pill rp-med">Moderado</span></td>
+          <td>Nuevas declaraciones anuales de sustancia = nuevo mercado de asesoría, pero también concentración en firmas grandes</td>
+          <td>Firmas pequeñas pierden clientes que no pueden pagar compliance premium</td>
+          <td>6–12 meses</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECCIÓN 5: CADENA DE TRANSMISIÓN -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Cadena de transmisión del daño — De la norma al ciudadano</h2>
+    </div>
+
+    <div class="chain-wrap">
+      <div class="chain-step">
+        <div class="cnum">1</div>
+        <div class="cstep-title">PL 641 aprobado sin reglamentación</div>
+        <div class="cstep-desc">Términos vagos. MEF con discrecionalidad amplia</div>
+      </div>
+      <div class="chain-step">
+        <div class="cnum">2</div>
+        <div class="cstep-title">Incertidumbre jurídica inmediata</div>
+        <div class="cstep-desc">Empresas no saben qué nivel de presencia es "suficiente"</div>
+      </div>
+      <div class="chain-step">
+        <div class="cnum">3</div>
+        <div class="cstep-title">Fuga de estructuras y navieras</div>
+        <div class="cstep-desc">Ya ocurre antes de la aprobación. Liberia y Bahamas ganan</div>
+      </div>
+      <div class="chain-step">
+        <div class="cnum">4</div>
+        <div class="cstep-title">Reducción base tributaria</div>
+        <div class="cstep-desc">Paradoja: la ley recauda menos porque los contribuyentes marginales se van</div>
+      </div>
+      <div class="chain-step">
+        <div class="cnum">5</div>
+        <div class="cstep-title">Destrucción empleo formal</div>
+        <div class="cstep-desc">Servicios jurídicos, bancarios y corporativos pierden clientes</div>
+      </div>
+      <div class="chain-step">
+        <div class="cnum">6</div>
+        <div class="cstep-title">Menor consumo interno</div>
+        <div class="cstep-desc">Profesionales desplazados consumen menos. Impacto en comercio minorista</div>
+      </div>
+      <div class="chain-step">
+        <div class="cnum">7</div>
+        <div class="cstep-title">Menos recaudación → ajuste fiscal</div>
+        <div class="cstep-desc">Ciudadano promedio siente recortes en servicios o más deuda pública</div>
+      </div>
+    </div>
+
+    <div class="charts-row-3">
+      <div class="chart-box">
+        <div class="chart-title">Empleos en riesgo por sector</div>
+        <div class="chart-subtitle">Estimación de empleos formales expuestos</div>
+        <div class="chart-wrap" style="height:200px">
+          <canvas id="chart-jobs"></canvas>
+        </div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">Cronograma de materialización del daño</div>
+        <div class="chart-subtitle">Plazo estimado de impacto por tipo de daño</div>
+        <div class="chart-wrap" style="height:200px">
+          <canvas id="chart-timeline"></canvas>
+        </div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">Probabilidad de salir de la lista UE en oct. 2026</div>
+        <div class="chart-subtitle">Análisis de escenarios según calidad de implementación</div>
+        <div class="chart-wrap" style="height:200px">
+          <canvas id="chart-prob"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 6: ANÁLISIS LIBERAL -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Análisis desde la teoría liberal y austríaca</h2>
+    </div>
+
+    <div class="liberal-note">
+      <div class="ln-author">Ludwig von Mises — La Acción Humana (1949)</div>
+      <div class="ln-quote">"La calculabilidad es el fundamento de todo orden económico. Sin ella, la acción empresarial racional se vuelve imposible."</div>
+      <div class="ln-application">Aplicación directa: el PL 641 destruye calculabilidad al no definir sus términos centrales. Una empresa no necesita que la graven para irse —basta con que no sepa con certeza si la van a gravar.</div>
+    </div>
+
+    <div class="liberal-note">
+      <div class="ln-author">F.A. Hayek — La Constitución de la Libertad (1960)</div>
+      <div class="ln-quote">"La competencia fiscal entre jurisdicciones es uno de los mecanismos más eficaces para limitar el poder del Estado. Eliminarla es concentrar ese poder."</div>
+      <div class="ln-application">Aplicación directa: la UE y la OCDE no buscan "transparencia" —buscan eliminar la competencia fiscal que los obliga a mantener sus tasas moderadas. Panamá es una pieza del rompecabezas de cartelización fiscal global.</div>
+    </div>
+
+    <div class="liberal-note">
+      <div class="ln-author">Murray N. Rothbard — Power and Market (1970)</div>
+      <div class="ln-quote">"Todo impuesto sobre rentas bruta es esencialmente una confiscación. No distingue entre empresas viables y no viables —solo castiga la actividad económica como tal."</div>
+      <div class="ln-application">Aplicación directa: el 15% sobre renta bruta del PL 641 no es un estándar internacional —es un mecanismo punitivo. La mayoría de jurisdicciones que adoptan sustancia económica gravan la renta neta o aplican sanciones progresionales, no una tarifa fija sobre el ingreso bruto.</div>
+    </div>
+
+    <div class="liberal-note">
+      <div class="ln-author">Frédéric Bastiat — Lo que se ve y lo que no se ve (1850)</div>
+      <div class="ln-quote">"El mal economista se limita al efecto visible; el buen economista también tiene en cuenta los efectos que no se ven."</div>
+      <div class="ln-application">Lo que se ve: Panamá "sale" de la lista UE. Lo que no se ve: los armadores que no abanderaron, las holdings que se fueron a Irlanda, los abogados que perdieron sus clientes, el precedente que invita a la próxima exigencia.</div>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-box">
+        <div class="chart-title">Radar de riesgo liberal — Dimensiones afectadas por el PL 641</div>
+        <div class="chart-subtitle">Evaluación del impacto sobre principios liberales fundamentales (0 = sin daño, 10 = daño máximo)</div>
+        <div class="chart-wrap" style="height:280px">
+          <canvas id="chart-radar"></canvas>
+        </div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">Impacto acumulado del marco BEPS sobre Panamá (2014–2030)</div>
+        <div class="chart-subtitle">Índice de erosión de soberanía fiscal (estimado, base 100 en 2014)</div>
+        <div class="chart-wrap" style="height:280px">
+          <canvas id="chart-beps"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 7: REFUTACIÓN -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2 class="section-title">Refutación argumento a argumento</h2>
+    </div>
+
+    <div class="refuta-item">
+      <div>
+        <div class="refuta-label rl-official">Argumento oficial (MEF / Chapman)</div>
+        <div class="refuta-text">"Es una decisión soberana, estratégica e inteligente de Panamá —no una respuesta a presiones externas."</div>
+      </div>
+      <div>
+        <div class="refuta-label rl-refuta">Refutación forense</div>
+        <div class="refuta-text">Si fuera soberana, no existiría el deadline del 30 de junio dictado por Bruselas ni las sesiones extraordinarias con un solo tema. La "soberanía" se ejerce cuando hay opciones reales, no cuando hay un ultimátum con fecha. La coacción institucional es tan real como la coacción directa —solo es más sofisticada.</div>
+      </div>
+    </div>
+
+    <div class="refuta-item">
+      <div>
+        <div class="refuta-label rl-official">Argumento oficial</div>
+        <div class="refuta-text">"No es para recaudar impuestos. Es para consolidar la credibilidad y atraer inversión de calidad."</div>
+      </div>
+      <div>
+        <div class="refuta-label rl-refuta">Refutación forense</div>
+        <div class="refuta-text">El 15% sobre renta bruta es uno de los impuestos más onerosos que existe en la práctica. "No es para recaudar" y "paga 15% sobre tu ingreso bruto" son contradictorios. Si el objetivo es solo credibilidad, basta con exigir reporte —no con crear un impuesto punitivo. El diseño de la norma delata su verdadera naturaleza fiscal.</div>
+      </div>
+    </div>
+
+    <div class="refuta-item">
+      <div>
+        <div class="refuta-label rl-official">Argumento oficial</div>
+        <div class="refuta-text">"Las empresas serias ya cumplen los requisitos. Esta ley solo formaliza lo que existe."</div>
+      </div>
+      <div>
+        <div class="refuta-label rl-refuta">Refutación forense</div>
+        <div class="refuta-text">Si ya cumplen, la ley es innecesaria para ellas. Si no cumplen, las obliga a cambiar o irse. El argumento es circular. "Empresa seria" es un juicio de valor político —en la práctica, quien decide si una empresa es "seria" es el MEF con criterios subjetivos no codificados en el texto legal.</div>
+      </div>
+    </div>
+
+    <div class="refuta-item">
+      <div>
+        <div class="refuta-label rl-official">Argumento oficial</div>
+        <div class="refuta-text">"Singapur y Hong Kong lo hicieron y prosperaron. Panamá debe seguir ese mismo camino."</div>
+      </div>
+      <div>
+        <div class="refuta-label rl-refuta">Refutación forense</div>
+        <div class="refuta-text">Ambas jurisdicciones publicaron reglamentación detallada antes de aprobar la ley, tomaron años en el proceso y tienen aparatos institucionales de primer nivel para implementar. Panamá quiere aprobar en semanas y reglamentar después. El abogado Leblanc lo resumió: "La lección no es copiar la fórmula, sino hacer un traje a nuestra medida." El PL 641 es un traje ajeno.</div>
+      </div>
+    </div>
+
+    <div class="refuta-item">
+      <div>
+        <div class="refuta-label rl-official">Argumento oficial (APEDE / gremios pro-ley)</div>
+        <div class="refuta-text">"Los inversionistas buscan ecosistemas con reputación y reglas claras. Esta ley mejora esa reputación."</div>
+      </div>
+      <div>
+        <div class="refuta-label rl-refuta">Refutación forense</div>
+        <div class="refuta-text">Correcta en principio, equivocada en la forma. Los inversionistas buscan reglas claras —exactamente lo que el PL 641 no provee al no definir sus términos centrales. Una ley con términos vagos no da certeza; da discrecionalidad. La reputación que se construye sobre bases regulatorias ambiguas es más frágil que la que se construye sobre principios sólidos.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 8: PROYECCIÓN DE DAÑOS A FUTURO -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2 class="section-title">Proyección de daños a 5 años — Cálculo forense</h2>
+    </div>
+
+    <div class="damage-proj">
+      <div class="dp-title">Estimación de daño económico acumulado 2026–2030</div>
+      <div class="dp-subtitle">Basado en análisis de impacto sectorial, comparativos internacionales y declaraciones de gremios. No incluye beneficios potenciales de salida de lista UE.</div>
+      <div class="dp-grid">
+        <div class="dp-item">
+          <div class="dp-scenario">Escenario pesimista</div>
+          <div class="dp-num">$3,200–4,500M</div>
+          <div class="dp-desc">Fuga masiva de marina mercante (30%+ del registro), relocalización de holdings y SEM, crisis de litigiosidad, No sale de lista UE en oct. 2026. Daño acumulado en IED, servicios jurídicos y empleo formal en 5 años.</div>
+        </div>
+        <div class="dp-item">
+          <div class="dp-scenario">Escenario moderado</div>
+          <div class="dp-num">$1,200–2,100M</div>
+          <div class="dp-desc">Se excluye la marina mercante, se publican reglamentos en 2026, incertidumbre jurídica parcial. Algunas estructuras se van, el sector se adapta con fricción. Sale de lista UE pero el costo de cumplimiento ya está internalizado.</div>
+        </div>
+        <div class="dp-item">
+          <div class="dp-scenario">Escenario optimista</div>
+          <div class="dp-num">$400–800M</div>
+          <div class="dp-desc">Ley bien reglamentada, marina mercante excluida, transición ordenada, sale de lista UE. Costo de cumplimiento real pero compensado por reducción de fricciones bancarias internacionales para multinacionales ya establecidas.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-box full" style="margin-bottom:20px">
+      <div class="chart-title">Proyección de impacto acumulado 2026–2030 por escenario (B/. millones)</div>
+      <div class="chart-subtitle">Daño económico estimado sobre PIB de servicios financieros, corporativos y marítimos panameños</div>
+      <div class="chart-wrap" style="height:280px">
+        <canvas id="chart-projection"></canvas>
+      </div>
+    </div>
+
+    <div class="analysis-grid">
+      <div class="ablock ablock-red">
+        <div class="ablock-label al-red">Riesgo sistémico de largo plazo</div>
+        <div class="ablock-title">El Pilar 2 OCDE ya espera en la fila</div>
+        <div class="ablock-text">La OCDE ya tiene aprobado el Pilar 2: impuesto mínimo global del 15% sobre la utilidad de grandes grupos multinacionales. Una vez que Panamá acepte el marco BEPS como legítimo con el PL 641, el argumento para resistir el Pilar 2 desaparece. Este podría eliminar efectivamente el modelo de hub de servicios financieros panameño tal como se conoce hoy.</div>
+      </div>
+      <div class="ablock ablock-amber">
+        <div class="ablock-label al-amber">Recomendación técnica</div>
+        <div class="ablock-title">Lo que haría una ley bien diseñada</div>
+        <div class="ablock-text">1) Excluir expresamente la marina mercante. 2) Publicar el reglamento antes de votar la ley. 3) Definir criterios objetivos de "sustancia adecuada" (número mínimo de empleados, monto mínimo de nómina local, proporción de decisiones documentadas). 4) Cambiar la base del impuesto de renta bruta a renta neta. 5) Régimen de transición de al menos 18 meses para estructuras preexistentes.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 9: FUENTES -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2 class="section-title">Fuentes y referencias documentales</h2>
+    </div>
+    <div class="sources-grid">
+      <div class="source-item">
+        <div class="source-num">F-01</div>
+        <div class="source-name">Proyecto de Ley 641 — Texto oficial</div>
+        <div class="source-detail">Asamblea Nacional de Panamá. Presentado el 30 de abril de 2026 por el MEF. 17 artículos, arts. 707-A a 707-K del Código Fiscal.</div>
+      </div>
+      <div class="source-item">
+        <div class="source-num">F-02</div>
+        <div class="source-name">Ministerio de Economía y Finanzas (MEF)</div>
+        <div class="source-detail">Comunicado oficial del PL 641. Defensa pública del ministro Felipe Chapman ante la Comisión de Economía (mayo 2026).</div>
+      </div>
+      <div class="source-item">
+        <div class="source-num">F-03</div>
+        <div class="source-name">Infobae Panamá — Análisis PL 641</div>
+        <div class="source-detail">"Ley de Sustancia Económica: vía para sacar a Panamá de la lista discriminatoria de la UE." Abril 2026.</div>
+      </div>
+      <div class="source-item">
+        <div class="source-num">F-04</div>
+        <div class="source-name">KPMG Panamá</div>
+        <div class="source-detail">"Propuesta sobre Requisitos de Sustancia Económica para Rentas Pasivas de Fuente Extranjera en Panamá." Marzo 2026.</div>
+      </div>
+      <div class="source-item">
+        <div class="source-num">F-05</div>
+        <div class="source-name">Deloitte Panamá</div>
+        <div class="source-detail">"Sustancia económica en Panamá — Precios de Transferencia." Análisis del anteproyecto. Abril 2026.</div>
+      </div>
+      <div class="source-item">
+        <div class="source-num">F-06</div>
+        <div class="source-name">La Estrella de Panamá</div>
+        <div class="source-detail">"Las claves para entender el proyecto de ley sobre sustancia económica." Mayo 2026. Incluye declaraciones del Abg. Eduardo Leblanc.</div>
+      </div>
+      <div class="source-item">
+        <div class="source-num">F-07</div>
+        <div class="source-name">La Prensa Panamá</div>
+        <div class="source-detail">"Piden excluir a la marina mercante de la ley de sustancia económica." Mayo 2026. Testimonio de Jazmina Rovi, Apademar.</div>
+      </div>
+      <div class="source-item">
+        <div class="source-num">F-08</div>
+        <div class="source-name">GAPIFI — Grupo Acción para la Igualdad Financiera Internacional</div>
+        <div class="source-detail">Carta a la Comisión de Economía de la Asamblea Nacional. Propuestas de modificación al art. 707-B. Mayo 2026.</div>
+      </div>
+      <div class="source-item">
+        <div class="source-num">F-09</div>
+        <div class="source-name">MEF / Contraloría — Avance Económico y Social 2025</div>
+        <div class="source-detail">PIB real $84,752.9 millones. Crecimiento 4.4%. Informalidad laboral 47.1%. Datos oficiales 2025.</div>
+      </div>
+      <div class="source-item">
+        <div class="source-num">F-10</div>
+        <div class="source-name">Clarksons Research — World Fleet Monitor</div>
+        <div class="source-detail">Marina mercante panameña: 8,810 buques, 241.1M TRB, 14% de la flota mundial. Citado en EFE, sept. 2025.</div>
+      </div>
+      <div class="source-item">
+        <div class="source-num">F-11</div>
+        <div class="source-name">Colegio Nacional de Abogados (CNA) — Observaciones PL 641</div>
+        <div class="source-detail">Presentación ante la Comisión de Economía. Señala indefinición de términos, riesgo de discrecionalidad y necesidad de reglamentación previa. Mayo 2026.</div>
+      </div>
+      <div class="source-item">
+        <div class="source-num">F-12</div>
+        <div class="source-name">Ludwig von Mises / F.A. Hayek / Murray Rothbard / F. Bastiat</div>
+        <div class="source-detail">La Acción Humana (1949); La Constitución de la Libertad (1960); Power and Market (1970); Lo que se ve y lo que no se ve (1850). Marco teórico liberal-austríaco.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- CONCLUSIÓN -->
+<div class="conclusion">
+  <div class="concl-inner">
+    <div class="concl-label">Veredicto final forense</div>
+    <div class="concl-grid">
+      <div>
+        <div class="concl-main">Panamá está apostando una arquitectura fiscal de 100 años a una promesa europea sin garantía contractual —y el costo de perder esa apuesta es permanente.</div>
+        <div class="concl-body">El PL 641 es necesario en su principio pero peligroso en su implementación actual. Una nación soberana no debe aprobar leyes en semanas bajo ultimátum externo, con términos indefinidos, sin reglamentación previa, gravando renta bruta y excluyendo sectores estratégicos solo si el gremio presiona lo suficiente. El precedente institucional que establece —que Bruselas puede dictar política fiscal panameña vía listas discriminatorias— es el daño más duradero, porque no aparece en ningún balance de cuentas nacionales.</div>
+      </div>
+      <div class="concl-points">
+        <div class="cp-item"><div class="cp-num">I.</div><div class="cp-text">Excluir la marina mercante sin ambigüedad —o perder el mayor registro naval del mundo.</div></div>
+        <div class="cp-item"><div class="cp-num">II.</div><div class="cp-text">Publicar el reglamento antes del tercer debate, no después. Las definiciones son la ley real.</div></div>
+        <div class="cp-item"><div class="cp-num">III.</div><div class="cp-text">Cambiar la base de renta bruta a renta neta. La primera es punitiva; la segunda es un estándar.</div></div>
+        <div class="cp-item"><div class="cp-num">IV.</div><div class="cp-text">Exigir de la UE un compromiso vinculante antes de aprobación, no una promesa informal de evaluación.</div></div>
+        <div class="cp-item"><div class="cp-num">V.</div><div class="cp-text">Resistir el Pilar 2 OCDE con el mismo argumento que se resiste hoy: soberanía fiscal es desarrollo económico.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-brand">AST SYSTEM COMPUTER TECHNOLOGY · RUC 8-844-2003 DV:55 · ast-pty.com</div>
+  <div class="footer-sources">Fuentes: MEF Panamá · Asamblea Nacional · KPMG · Deloitte · La Prensa · La Estrella · Clarksons Research · Contraloría General<br>Este reporte tiene fines analíticos e informativos. No constituye asesoría jurídica ni tributaria.</div>
+</div>
+
+<script>
+const NAVY='#0B1C2E', NAVY2='#1E3A55', GOLD='#C9A84C', GOLD2='#E2C47A';
+const RED='#C0392B', AMBER='#D68910', GREEN='#1A7A4A', SLATE='#5D6D7E';
+Chart.defaults.font.family="'IBM Plex Sans', sans-serif";
+Chart.defaults.color=SLATE;
+Chart.defaults.plugins.legend.labels.boxWidth=12;
+Chart.defaults.plugins.legend.labels.padding=14;
+
+// PIB por sector
+new Chart(document.getElementById('chart-pib'),{type:'doughnut',data:{labels:['Transporte y logística','Servicios financieros','Marina mercante / corporativo','Construcción e inmobiliario','Comercio','Otros servicios'],datasets:[{data:[28,18,14,12,14,14],backgroundColor:[NAVY,GOLD,'#E74C3C',NAVY2,AMBER,'#BDC3C7'],borderWidth:2,borderColor:'#fff'}]},options:{plugins:{legend:{position:'right',labels:{font:{size:11}}}},cutout:'60%',responsive:true,maintainAspectRatio:false}});
+
+// Crecimiento proyectado
+new Chart(document.getElementById('chart-growth'),{type:'line',data:{labels:['2025','2026','2027','2028','2029','2030'],datasets:[{label:'Sin PL 641 (base)',data:[4.4,4.1,4.2,4.3,4.4,4.5],borderColor:GREEN,backgroundColor:'rgba(26,122,74,0.08)',borderWidth:2,pointRadius:4,tension:.3},{label:'PL 641 bien implementado',data:[4.4,3.8,3.9,4.1,4.2,4.3],borderColor:GOLD,backgroundColor:'rgba(201,168,76,0.08)',borderWidth:2,borderDash:[5,3],pointRadius:4,tension:.3},{label:'PL 641 texto actual',data:[4.4,3.2,2.9,3.0,3.2,3.4],borderColor:RED,backgroundColor:'rgba(192,57,43,0.08)',borderWidth:2,borderDash:[8,4],pointRadius:4,tension:.3}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:2,max:5,ticks:{callback:v=>v+'%'},grid:{color:'rgba(0,0,0,0.05)'}},x:{grid:{color:'rgba(0,0,0,0.05)'}}},plugins:{legend:{labels:{font:{size:11}}}}}});
+
+// Márgenes vs 15%
+new Chart(document.getElementById('chart-margins'),{type:'bar',data:{labels:['Navieras int.','Holding IP','Serv. financieros','Bancario','SEM regional','Inmobiliario'],datasets:[{label:'Margen neto típico (%)',data:[6,12,18,22,15,10],backgroundColor:NAVY2+99,borderColor:NAVY2,borderWidth:1},{label:'Tasa PL 641 sobre renta bruta',data:[15,15,15,15,15,15],backgroundColor:RED+'55',borderColor:RED,borderWidth:2,type:'line',pointRadius:0,borderDash:[6,3]}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>v+'%'},grid:{color:'rgba(0,0,0,0.05)'}},x:{grid:{display:false}}},plugins:{legend:{labels:{font:{size:11}}}}}});
+
+// Certeza jurídica comparativa
+new Chart(document.getElementById('chart-legal'),{type:'bar',data:{labels:['Singapur','Irlanda','Hong Kong','Barbados','Panamá\n(pre-PL641)','Panamá\n(PL641 actual)'],datasets:[{label:'Índice certeza jurídica fiscal (0-100)',data:[88,85,82,72,65,42],backgroundColor:[GOLD,GOLD,GOLD,GOLD,NAVY2,RED].map(c=>c+'cc'),borderColor:[GOLD,GOLD,GOLD,GOLD,NAVY2,RED],borderWidth:1}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,scales:{x:{min:0,max:100,grid:{color:'rgba(0,0,0,0.05)'}},y:{grid:{display:false}}},plugins:{legend:{display:false}}}});
+
+// Registro de buques
+new Chart(document.getElementById('chart-ships'),{type:'bar',data:{labels:['Estado actual','PL 641\nbien implementado','PL 641\ntexto actual','Sin excluir\nmarina mercante'],datasets:[{label:'Buques bajo bandera panameña (estimado)',data:[8810,8400,7200,5500],backgroundColor:[GREEN+'88',GOLD+'88',AMBER+'88',RED+'88'],borderColor:[GREEN,GOLD,AMBER,RED],borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:0,max:10000,ticks:{callback:v=>v.toLocaleString()},grid:{color:'rgba(0,0,0,0.05)'}},x:{grid:{display:false}}},plugins:{legend:{display:false}}}});
+
+// IED proyectada
+new Chart(document.getElementById('chart-ied'),{type:'line',data:{labels:['2025','2026','2027','2028','2029','2030'],datasets:[{label:'Escenario óptimo (B/. M)',data:[4200,4400,4700,5000,5300,5600],borderColor:GREEN,backgroundColor:'rgba(26,122,74,0.05)',borderWidth:2,fill:true,tension:.3},{label:'Escenario moderado',data:[4200,3900,3700,3800,3900,4100],borderColor:GOLD,backgroundColor:'rgba(201,168,76,0.05)',borderWidth:2,fill:true,borderDash:[5,3],tension:.3},{label:'Escenario pesimista',data:[4200,3200,2700,2500,2600,2700],borderColor:RED,backgroundColor:'rgba(192,57,43,0.05)',borderWidth:2,fill:true,borderDash:[8,4],tension:.3}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>'$'+v.toLocaleString()+'M'},grid:{color:'rgba(0,0,0,0.05)'}},x:{grid:{color:'rgba(0,0,0,0.05)'}}},plugins:{legend:{labels:{font:{size:11}}}}}});
+
+// Empleos en riesgo
+new Chart(document.getElementById('chart-jobs'),{type:'bar',data:{labels:['Serv. jurídicos','Marina merc.','Banca CBI','SEM','Logística ZLC','Inmobiliario'],datasets:[{label:'Empleos formales en riesgo (estimado)',data:[8500,3200,2800,4000,1800,1200],backgroundColor:NAVY+'bb',borderColor:NAVY,borderWidth:1}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,scales:{x:{ticks:{callback:v=>v.toLocaleString()},grid:{color:'rgba(0,0,0,0.05)'}},y:{grid:{display:false}}},plugins:{legend:{display:false}}}});
+
+// Timeline daños
+new Chart(document.getElementById('chart-timeline'),{type:'bar',data:{labels:['0–6m','6–12m','12–24m','24–36m','36–60m'],datasets:[{label:'Intensidad de daño esperado',data:[3,6,8,7,5],backgroundColor:[AMBER+'88',RED+'88',RED,RED+'bb',AMBER+'88'],borderColor:[AMBER,RED,RED,RED,AMBER],borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{max:10,ticks:{stepSize:2},grid:{color:'rgba(0,0,0,0.05)'}},x:{grid:{display:false}}},plugins:{legend:{display:false}}}});
+
+// Probabilidades UE
+new Chart(document.getElementById('chart-prob'),{type:'doughnut',data:{labels:['Optimista: sale oct.2026 (20%)','Moderado: sale feb.2027 (45%)','Pesimista: no sale en 2027 (35%)'],datasets:[{data:[20,45,35],backgroundColor:[GREEN+'cc',GOLD+'cc',RED+'cc'],borderWidth:2,borderColor:'#fff'}]},options:{plugins:{legend:{position:'bottom',labels:{font:{size:10}}}},cutout:'55%',responsive:true,maintainAspectRatio:false}});
+
+// Radar liberal
+new Chart(document.getElementById('chart-radar'),{type:'radar',data:{labels:['Soberanía fiscal','Certeza jurídica','Libre mercado','Competencia fiscal','Prop. privada','Burocracia mínima','Predictibilidad'],datasets:[{label:'Sin PL 641',data:[7,7,8,9,8,7,7],borderColor:GREEN,backgroundColor:'rgba(26,122,74,0.15)',borderWidth:2,pointRadius:3},{label:'PL 641 texto actual',data:[2,3,5,3,6,2,3],borderColor:RED,backgroundColor:'rgba(192,57,43,0.15)',borderWidth:2,pointRadius:3}]},options:{responsive:true,maintainAspectRatio:false,scales:{r:{min:0,max:10,ticks:{stepSize:2,font:{size:9}},pointLabels:{font:{size:10}}}},plugins:{legend:{labels:{font:{size:11}}}}}});
+
+// BEPS acumulado
+new Chart(document.getElementById('chart-beps'),{type:'line',data:{labels:['2014','2016','2018','2020','2022','2024','2026\n(PL641)','2028\n(Pilar2?)','2030'],datasets:[{label:'Índice soberanía fiscal Panamá (base 100 = 2014)',data:[100,95,87,80,73,68,55,40,30],borderColor:RED,backgroundColor:'rgba(192,57,43,0.08)',borderWidth:2.5,fill:true,tension:.3,pointRadius:5,pointBackgroundColor:RED},{label:'Umbral crítico de viabilidad del modelo',data:[50,50,50,50,50,50,50,50,50],borderColor:AMBER,borderWidth:1.5,borderDash:[6,4],pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:0,max:110,grid:{color:'rgba(0,0,0,0.05)'}},x:{grid:{color:'rgba(0,0,0,0.05)'}}},plugins:{legend:{labels:{font:{size:11}}}}}});
+
+// Proyección daños acumulados
+new Chart(document.getElementById('chart-projection'),{type:'bar',data:{labels:['2026','2027','2028','2029','2030','Acumulado 5A'],datasets:[{label:'Escenario pesimista (B/. M)',data:[320,780,950,1100,1350,4500],backgroundColor:RED+'88',borderColor:RED,borderWidth:1},{label:'Escenario moderado (B/. M)',data:[180,380,480,520,540,2100],backgroundColor:AMBER+'88',borderColor:AMBER,borderWidth:1},{label:'Escenario optimista (B/. M)',data:[80,140,160,170,150,700],backgroundColor:GREEN+'88',borderColor:GREEN,borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>'$'+v.toLocaleString()+'M'},grid:{color:'rgba(0,0,0,0.05)'}},x:{grid:{display:false}}},plugins:{legend:{labels:{font:{size:11}}}}}});
+</script>
+</body>
+</html>
